@@ -1,30 +1,31 @@
 pipeline {
   agent any
   stages {
-    stage('build-the-app') {
+    stage('compile') {
       steps {
-        echo 'this is the build job'
+        echo 'this is the compile job'
         sh 'mvn compile'
       }
     }
 
-    stage('test-the-app') {
+    stage('test') {
       steps {
         echo 'this is the test job'
-        sh 'mvn clean test'
+        sh 'mvn test'
       }
     }
 
-    stage('package-the-app') {
+    stage('package') {
       steps {
         echo 'this is the package job'
-        sh 'mvn package'
+        sh 'mvn package -DskipTests'
+        sleep 7
       }
     }
 
-    stage('archive-the-app') {
+    stage('archive') {
       steps {
-        archiveArtifacts '**/target/*.jar'
+        archiveArtifacts ‘**/target/*.jar'
       }
     }
 
@@ -34,8 +35,9 @@ pipeline {
   }
   post {
     always {
-      echo 'this pipeline has completed...'
+      echo 'this is my first pipeline...'
     }
 
   }
 }
+
